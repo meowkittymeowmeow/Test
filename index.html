@@ -1,0 +1,743 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>AHG Store — Mockup</title>
+  <meta name="description" content="AHG Store mockup homepage" />
+  <style>
+    :root{
+      --bg: #ffffff;
+      --surface: #f6f7f8;
+      --text: #101418;
+      --muted: #5a6672;
+      --border: #e5e7eb;
+      --brand: #0b5cab;        /* tweak */
+      --brand-2: #0a3f77;      /* tweak */
+      --accent: #d97706;       /* small accent */
+      --shadow: 0 10px 30px rgba(16,20,24,.08);
+      --radius-lg: 18px;
+      --radius-md: 14px;
+      --radius-sm: 10px;
+      --max: 1160px;
+      --pad: clamp(16px, 3vw, 28px);
+      --focus: 0 0 0 3px rgba(11,92,171,.25);
+      --ease: cubic-bezier(.2,.9,.2,1);
+      --font: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+    }
+
+    * { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0;
+      font-family: var(--font);
+      color: var(--text);
+      background: var(--bg);
+      line-height: 1.35;
+    }
+
+    a { color: inherit; text-decoration: none; }
+    a:focus-visible, button:focus-visible, input:focus-visible {
+      outline: none;
+      box-shadow: var(--focus);
+      border-radius: 10px;
+    }
+
+    .container { width: min(var(--max), calc(100% - (var(--pad) * 2))); margin: 0 auto; }
+    .row { display: flex; align-items: center; gap: 14px; }
+    .stack { display: grid; gap: 16px; }
+    .pill {
+      display: inline-flex; align-items: center; gap: 10px;
+      padding: 8px 12px; border: 1px solid var(--border); border-radius: 999px;
+      background: #fff;
+      font-size: 13px; color: var(--muted);
+    }
+    .btn {
+      appearance: none; border: 1px solid var(--border);
+      background: #fff; color: var(--text);
+      padding: 10px 14px; border-radius: 12px;
+      font-weight: 650; font-size: 14px;
+      display: inline-flex; align-items: center; justify-content: center;
+      gap: 10px;
+      cursor: pointer;
+      transition: transform .08s var(--ease), background .2s var(--ease), border-color .2s var(--ease);
+      user-select: none;
+    }
+    .btn:hover { transform: translateY(-1px); border-color: #d1d5db; }
+    .btn:active { transform: translateY(0px); }
+    .btn.primary {
+      background: var(--brand);
+      border-color: var(--brand);
+      color: #fff;
+    }
+    .btn.primary:hover { background: var(--brand-2); border-color: var(--brand-2); }
+    .btn.ghost {
+      background: transparent;
+    }
+
+    .sr-only {
+      position: absolute; width: 1px; height: 1px; padding: 0; margin: -1px;
+      overflow: hidden; clip: rect(0,0,0,0); border: 0;
+    }
+
+    /* top promo */
+    .promo {
+      background: linear-gradient(90deg, rgba(11,92,171,.10), rgba(217,119,6,.10));
+      border-bottom: 1px solid var(--border);
+      font-size: 13px;
+      color: var(--muted);
+    }
+    .promo .container { padding: 10px 0; display: flex; justify-content: space-between; gap: 10px; }
+    .promo strong { color: var(--text); font-weight: 700; }
+
+    /* header */
+    header {
+      position: sticky; top: 0; z-index: 40;
+      background: rgba(255,255,255,.82);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(229,231,235,.7);
+    }
+    .header-inner { padding: 14px 0; display: grid; grid-template-columns: 1fr 2fr 1fr; gap: 16px; align-items: center; }
+    .brand {
+      display: flex; align-items: center; gap: 12px;
+      min-width: 220px;
+    }
+    .logo {
+      width: 40px; height: 40px; border-radius: 12px;
+      background: radial-gradient(circle at 30% 30%, rgba(255,255,255,.5), rgba(255,255,255,0)),
+                  linear-gradient(135deg, var(--brand), var(--brand-2));
+      box-shadow: 0 10px 20px rgba(11,92,171,.18);
+    }
+    .brand-title { display: grid; gap: 2px; }
+    .brand-title b { font-size: 14px; letter-spacing: .2px; }
+    .brand-title span { font-size: 12px; color: var(--muted); }
+
+    nav ul {
+      list-style: none; padding: 0; margin: 0;
+      display: flex; gap: 18px; justify-content: center; align-items: center;
+      font-weight: 650;
+    }
+    nav a {
+      padding: 10px 10px;
+      border-radius: 12px;
+      color: #1f2937;
+      transition: background .2s var(--ease);
+    }
+    nav a:hover { background: rgba(11,92,171,.08); }
+
+    .actions { display: flex; justify-content: flex-end; gap: 10px; align-items: center; }
+    .icon-btn {
+      width: 40px; height: 40px; border-radius: 12px;
+      border: 1px solid var(--border); background: #fff;
+      display: grid; place-items: center;
+      cursor: pointer;
+      transition: transform .08s var(--ease), border-color .2s var(--ease);
+    }
+    .icon-btn:hover { transform: translateY(-1px); border-color: #d1d5db; }
+    .icon {
+      width: 18px; height: 18px; display: inline-block;
+      background: currentColor;
+      -webkit-mask: var(--mask) center / contain no-repeat;
+              mask: var(--mask) center / contain no-repeat;
+    }
+    .i-search { --mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M10 18a8 8 0 1 1 5.293-14.293A8 8 0 0 1 10 18m0-2a6 6 0 1 0-4.243-1.757A5.98 5.98 0 0 0 10 16m10.707 5.293-5.4-5.4 1.414-1.414 5.4 5.4z"/></svg>'); }
+    .i-user   { --mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5m0 2c-4.418 0-8 2.239-8 5v1h16v-1c0-2.761-3.582-5-8-5"/></svg>'); }
+    .i-cart   { --mask: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path fill="black" d="M7 18a2 2 0 1 0 2 2 2 2 0 0 0-2-2m10 0a2 2 0 1 0 2 2 2 2 0 0 0-2-2M6.2 6l.6 3h13.4l-1.2 6H7.2L5 3H2V1h4l.6 3H22l-2 10H7L6 6z"/></svg>'); }
+
+    /* search drawer */
+    .searchbar {
+      display: none;
+      padding: 12px 0 16px;
+      border-top: 1px solid rgba(229,231,235,.7);
+      background: rgba(255,255,255,.88);
+      backdrop-filter: blur(10px);
+    }
+    .searchbar.open { display: block; }
+    .searchbar form { display: grid; grid-template-columns: 1fr auto; gap: 10px; }
+    .input {
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 12px 14px;
+      font-size: 14px;
+      background: #fff;
+    }
+
+    /* hero */
+    .hero {
+      padding: 34px 0 20px;
+      background:
+        radial-gradient(900px 260px at 50% 0%, rgba(11,92,171,.12), transparent 55%),
+        linear-gradient(#fff, #fff);
+    }
+    .hero-grid {
+      display: grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap: 20px;
+      align-items: stretch;
+    }
+    .hero-card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: linear-gradient(135deg, rgba(11,92,171,.08), rgba(217,119,6,.06));
+      padding: 22px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+    .hero-card:after{
+      content:"";
+      position:absolute; inset:-120px -160px auto auto;
+      width: 320px; height: 320px;
+      background: radial-gradient(circle at 30% 30%, rgba(11,92,171,.35), rgba(11,92,171,0) 60%);
+      transform: rotate(18deg);
+      pointer-events:none;
+    }
+    h1 { margin: 0 0 10px; font-size: clamp(26px, 3.1vw, 38px); letter-spacing: -.3px; }
+    .lead { margin: 0 0 16px; color: #374151; font-size: 15px; line-height: 1.5; max-width: 60ch; }
+    .hero-actions { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 12px; }
+
+    .hero-side {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      padding: 18px;
+      box-shadow: 0 10px 26px rgba(16,20,24,.06);
+      display: grid;
+      align-content: start;
+      gap: 12px;
+    }
+    .mini-title { font-weight: 800; letter-spacing: .2px; }
+    .trust { display: grid; gap: 10px; margin-top: 6px; }
+    .trust-item { display: grid; grid-template-columns: 34px 1fr; gap: 12px; align-items: start; padding: 10px; border-radius: 14px; background: var(--surface); border: 1px solid rgba(229,231,235,.9); }
+    .badge {
+      width: 34px; height: 34px; border-radius: 12px;
+      background: rgba(11,92,171,.12);
+      display: grid; place-items: center;
+      font-weight: 900; color: var(--brand);
+    }
+    .trust-item b { font-size: 13px; }
+    .trust-item p { margin: 2px 0 0; font-size: 12px; color: var(--muted); line-height: 1.35; }
+
+    /* sections */
+    section { padding: 26px 0; }
+    .section-head {
+      display: flex; justify-content: space-between; align-items: baseline; gap: 16px;
+      margin-bottom: 14px;
+    }
+    .section-head h2 { margin: 0; font-size: 18px; letter-spacing: -.2px; }
+    .section-head p { margin: 0; color: var(--muted); font-size: 13px; }
+
+    /* level cards */
+    .levels {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 14px;
+    }
+    .level {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-md);
+      background: #fff;
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+      box-shadow: 0 12px 26px rgba(16,20,24,.05);
+      transition: transform .12s var(--ease), box-shadow .2s var(--ease), border-color .2s var(--ease);
+    }
+    .level:hover {
+      transform: translateY(-2px);
+      border-color: rgba(11,92,171,.25);
+      box-shadow: 0 18px 40px rgba(16,20,24,.08);
+    }
+    .level .img {
+      height: 70px;
+      border-radius: 14px;
+      background:
+        radial-gradient(circle at 30% 20%, rgba(255,255,255,.55), rgba(255,255,255,0) 55%),
+        linear-gradient(135deg, rgba(11,92,171,.22), rgba(217,119,6,.12));
+      border: 1px solid rgba(229,231,235,.9);
+    }
+    .level b { font-size: 14px; }
+    .level span { font-size: 12px; color: var(--muted); }
+
+    /* products */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+    }
+    .card {
+      border: 1px solid var(--border);
+      border-radius: var(--radius-lg);
+      background: #fff;
+      overflow: hidden;
+      box-shadow: 0 10px 26px rgba(16,20,24,.06);
+      transition: transform .12s var(--ease), border-color .2s var(--ease), box-shadow .2s var(--ease);
+      display: grid;
+      align-content: start;
+      min-height: 100%;
+    }
+    .card:hover { transform: translateY(-2px); border-color: rgba(11,92,171,.25); box-shadow: 0 18px 44px rgba(16,20,24,.09); }
+    .thumb {
+      height: 180px;
+      background:
+        linear-gradient(135deg, rgba(11,92,171,.12), rgba(217,119,6,.08)),
+        repeating-linear-gradient(45deg, rgba(255,255,255,.0), rgba(255,255,255,.0) 10px, rgba(255,255,255,.12) 10px, rgba(255,255,255,.12) 20px);
+      position: relative;
+    }
+    .tag {
+      position: absolute; top: 12px; left: 12px;
+      background: rgba(255,255,255,.9);
+      border: 1px solid rgba(229,231,235,.95);
+      padding: 6px 10px;
+      border-radius: 999px;
+      font-size: 12px;
+      font-weight: 700;
+      color: #1f2937;
+    }
+    .body {
+      padding: 14px;
+      display: grid;
+      gap: 10px;
+    }
+    .title { font-weight: 800; font-size: 14px; letter-spacing: -.15px; }
+    .meta { display: flex; justify-content: space-between; align-items: center; gap: 10px; }
+    .price { font-weight: 900; }
+    .sub { font-size: 12px; color: var(--muted); }
+    .card-actions { display: flex; gap: 10px; }
+    .card-actions .btn { flex: 1; }
+
+    /* footer */
+    footer {
+      margin-top: 24px;
+      border-top: 1px solid var(--border);
+      background: #fbfbfc;
+    }
+    .footer-grid {
+      padding: 22px 0;
+      display: grid;
+      grid-template-columns: 1.3fr 1fr 1fr 1fr;
+      gap: 18px;
+    }
+    footer h3 { margin: 0 0 10px; font-size: 14px; }
+    footer a { color: #334155; font-size: 13px; padding: 6px 0; display: inline-block; }
+    footer a:hover { color: var(--brand); }
+    .fineprint {
+      padding: 14px 0 20px;
+      border-top: 1px solid rgba(229,231,235,.9);
+      color: var(--muted);
+      font-size: 12px;
+      display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+    }
+
+    /* responsive */
+    @media (max-width: 980px){
+      .header-inner { grid-template-columns: 1fr 1fr; }
+      nav { grid-column: 1 / -1; order: 3; }
+      nav ul { justify-content: flex-start; flex-wrap: wrap; }
+      .actions { justify-content: flex-end; }
+      .hero-grid { grid-template-columns: 1fr; }
+      .levels { grid-template-columns: repeat(2, 1fr); }
+      .grid { grid-template-columns: repeat(2, 1fr); }
+      .footer-grid { grid-template-columns: 1fr 1fr; }
+    }
+    @media (max-width: 520px){
+      .levels { grid-template-columns: 1fr; }
+      .grid { grid-template-columns: 1fr; }
+      .brand { min-width: 0; }
+      .brand-title span { display:none; }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="promo" role="region" aria-label="store announcement">
+    <div class="container">
+      <div>support the mission: <strong>your purchase helps grow the ministry</strong></div>
+      <div class="row" style="gap:10px;">
+        <span class="pill">free shipping threshold: set in theme</span>
+      </div>
+    </div>
+  </div>
+
+  <header>
+    <div class="container header-inner">
+      <a class="brand" href="#" aria-label="home">
+        <div class="logo" aria-hidden="true"></div>
+        <div class="brand-title">
+          <b>ahg store</b>
+          <span>uniforms • apparel • gifts &amp; gear</span>
+        </div>
+      </a>
+
+      <nav aria-label="primary">
+        <ul>
+          <li><a href="#levels">shop by level</a></li>
+          <li><a href="#uniforms">uniforms</a></li>
+          <li><a href="#apparel">apparel</a></li>
+          <li><a href="#gear">gifts &amp; gear</a></li>
+        </ul>
+      </nav>
+
+      <div class="actions">
+        <button class="icon-btn" id="searchToggle" aria-expanded="false" aria-controls="searchbar" title="Search">
+          <span class="icon i-search" aria-hidden="true"></span>
+          <span class="sr-only">Search</span>
+        </button>
+        <button class="icon-btn" title="Account">
+          <span class="icon i-user" aria-hidden="true"></span>
+          <span class="sr-only">Account</span>
+        </button>
+        <button class="icon-btn" id="cartBtn" title="Cart">
+          <span class="icon i-cart" aria-hidden="true"></span>
+          <span class="sr-only">Cart</span>
+        </button>
+      </div>
+    </div>
+
+    <div class="searchbar" id="searchbar">
+      <div class="container">
+        <form onsubmit="return false">
+          <input class="input" id="q" placeholder="search polos, patches, books…" autocomplete="off" />
+          <button class="btn primary" id="searchBtn">search</button>
+        </form>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero">
+      <div class="container hero-grid">
+        <div class="hero-card">
+          <span class="pill">raising godly girls</span>
+          <h1>uniforms and gear that actually feel easy to buy.</h1>
+          <p class="lead">
+            clear categories, fast add-to-cart, and no scavenger hunt.
+            start by level or jump straight to uniforms.
+          </p>
+
+          <div class="hero-actions">
+            <a class="btn primary" href="#levels">shop by level</a>
+            <a class="btn" href="#apparel">featured apparel</a>
+            <a class="btn ghost" href="#uniforms">uniform packages →</a>
+          </div>
+        </div>
+
+        <aside class="hero-side" aria-label="highlights">
+          <div class="mini-title">quick wins</div>
+          <div class="trust">
+            <div class="trust-item">
+              <div class="badge" aria-hidden="true">✓</div>
+              <div>
+                <b>simpler navigation</b>
+                <p>level-first entry point + direct routes to uniforms and packages.</p>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="badge" aria-hidden="true">⚡</div>
+              <div>
+                <b>faster shopping</b>
+                <p>quick add for best-sellers; full details one click away.</p>
+              </div>
+            </div>
+            <div class="trust-item">
+              <div class="badge" aria-hidden="true">★</div>
+              <div>
+                <b>cleaner product cards</b>
+                <p>consistent titles, pricing, and “why this matters” microcopy.</p>
+              </div>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </section>
+
+    <section id="levels">
+      <div class="container">
+        <div class="section-head">
+          <h2>shop by level</h2>
+          <p>pick a level to see uniforms, badges, and the right extras.</p>
+        </div>
+
+        <div class="levels" role="list">
+          <a class="level" role="listitem" href="#">
+            <div class="img" aria-hidden="true"></div>
+            <b>pathfinder</b>
+            <span>starter essentials</span>
+          </a>
+          <a class="level" role="listitem" href="#">
+            <div class="img" aria-hidden="true"></div>
+            <b>tenderheart</b>
+            <span>core uniform items</span>
+          </a>
+          <a class="level" role="listitem" href="#">
+            <div class="img" aria-hidden="true"></div>
+            <b>explorer</b>
+            <span>rank + awards</span>
+          </a>
+          <a class="level" role="listitem" href="#">
+            <div class="img" aria-hidden="true"></div>
+            <b>pioneer</b>
+            <span>service &amp; leadership</span>
+          </a>
+          <a class="level" role="listitem" href="#">
+            <div class="img" aria-hidden="true"></div>
+            <b>patriot</b>
+            <span>capstone gear</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    <section id="apparel">
+      <div class="container">
+        <div class="section-head">
+          <h2>featured apparel</h2>
+          <p>best sellers + class b basics that don’t surprise you at checkout.</p>
+        </div>
+
+        <div class="grid" id="productGrid" aria-live="polite"></div>
+      </div>
+    </section>
+
+    <section id="uniforms">
+      <div class="container">
+        <div class="section-head">
+          <h2>uniforms, without the confusion</h2>
+          <p>packages for first-time buyers + individual replacements.</p>
+        </div>
+
+        <div class="stack" style="grid-template-columns: 1fr 1fr; gap: 14px;">
+          <div class="hero-side">
+            <div class="mini-title">uniform packages</div>
+            <p class="lead" style="margin:0;color:var(--muted);font-size:13px;">
+              one click to “the right set” per level, with size guidance.
+            </p>
+            <div class="row" style="margin-top:10px;">
+              <a class="btn primary" href="#">shop packages</a>
+              <a class="btn" href="#">size guide</a>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="mini-title">adult leaders</div>
+            <p class="lead" style="margin:0;color:var(--muted);font-size:13px;">
+              quick access to adult uniform items (no digging through collections).
+            </p>
+            <div class="row" style="margin-top:10px;">
+              <a class="btn primary" href="#">adult uniforms</a>
+              <a class="btn" href="#">patches</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="gear">
+      <div class="container">
+        <div class="section-head">
+          <h2>gifts &amp; gear</h2>
+          <p>stuff that’s actually useful, not random filler.</p>
+        </div>
+
+        <div class="stack" style="grid-template-columns: 2fr 1fr; gap: 14px;">
+          <div class="hero-card" style="box-shadow: 0 10px 26px rgba(16,20,24,.06); background: linear-gradient(135deg, rgba(217,119,6,.09), rgba(11,92,171,.06));">
+            <h2 style="margin:0 0 10px;font-size:18px;">build a troop starter kit</h2>
+            <p class="lead" style="margin:0 0 14px;">
+              curated bundles: flags, handbooks, and “oh right we need that” items.
+            </p>
+            <div class="row">
+              <a class="btn primary" href="#">shop bundles</a>
+              <a class="btn" href="#">browse all gear</a>
+            </div>
+          </div>
+
+          <div class="hero-side">
+            <div class="mini-title">need help?</div>
+            <p class="lead" style="margin:0;color:var(--muted);font-size:13px;">
+              real-store questions: shipping, returns, and choosing the right uniform.
+            </p>
+            <div class="stack" style="margin-top:10px;">
+              <a class="btn" href="#">faqs</a>
+              <a class="btn" href="#">contact support</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container footer-grid">
+      <div>
+        <h3>ahg store</h3>
+        <p class="lead" style="margin:0;color:var(--muted);font-size:13px;">
+          a cleaner storefront mockup that you can translate into a shopify theme section-by-section.
+        </p>
+      </div>
+
+      <div>
+        <h3>help</h3>
+        <a href="#">contact us</a><br />
+        <a href="#">faqs</a><br />
+        <a href="#">shipping policy</a><br />
+        <a href="#">refunds &amp; returns</a>
+      </div>
+
+      <div>
+        <h3>shop</h3>
+        <a href="#levels">shop by level</a><br />
+        <a href="#uniforms">uniforms</a><br />
+        <a href="#apparel">apparel</a><br />
+        <a href="#gear">gifts &amp; gear</a>
+      </div>
+
+      <div>
+        <h3>policies</h3>
+        <a href="#">privacy policy</a><br />
+        <a href="#">terms of use</a><br />
+        <a href="#">disclosure statement</a>
+      </div>
+    </div>
+
+    <div class="container fineprint">
+      <div>© <span id="year"></span> ahg store (mockup)</div>
+      <div>payments: visa • mc • amex • paypal • apple pay • google pay</div>
+    </div>
+  </footer>
+
+  <!-- quick cart (mock) -->
+  <dialog id="cart" style="border:none;border-radius:18px;max-width:520px;width:calc(100% - 24px);box-shadow:var(--shadow);padding:0;">
+    <div style="padding:18px;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:10px;">
+      <b style="font-size:14px;">your cart</b>
+      <button class="btn" id="closeCart" style="padding:8px 10px;">close</button>
+    </div>
+    <div style="padding:18px;">
+      <p style="margin:0;color:var(--muted);font-size:13px;">this is a mock cart. wire it to shopify later.</p>
+      <div id="cartItems" style="margin-top:12px;display:grid;gap:10px;"></div>
+      <div style="margin-top:14px;display:flex;gap:10px;">
+        <button class="btn" id="clearCart" style="flex:1;">clear</button>
+        <button class="btn primary" style="flex:1;">checkout</button>
+      </div>
+    </div>
+  </dialog>
+
+  <script>
+    const products = [
+      { id: 1, title: "official short-sleeved girl uniform polo", variant: "white", price: 26.99, tag: "uniform polo" },
+      { id: 2, title: "official short-sleeved girl uniform polo", variant: "red", price: 26.99, tag: "uniform polo" },
+      { id: 3, title: "official class b classic t-shirt", variant: "assorted", price: 14.99, tag: "class b" },
+      { id: 4, title: "official classic class b long-sleeve", variant: "assorted", price: 17.99, tag: "class b" },
+    ];
+
+    const fmt = (n) => new Intl.NumberFormat(undefined, { style: "currency", currency: "USD" }).format(n);
+
+    const grid = document.getElementById("productGrid");
+    const cartDialog = document.getElementById("cart");
+    const cartItems = document.getElementById("cartItems");
+    let cart = [];
+
+    function renderProducts(list){
+      grid.innerHTML = "";
+      list.forEach(p => {
+        const el = document.createElement("article");
+        el.className = "card";
+        el.innerHTML = `
+          <div class="thumb">
+            <span class="tag">${p.tag}</span>
+          </div>
+          <div class="body">
+            <div class="title">${p.title}</div>
+            <div class="sub">variant: ${p.variant}</div>
+            <div class="meta">
+              <div class="price">${fmt(p.price)}</div>
+              <div class="sub">in stock (mock)</div>
+            </div>
+            <div class="card-actions">
+              <button class="btn" data-view="${p.id}">view</button>
+              <button class="btn primary" data-add="${p.id}">add</button>
+            </div>
+          </div>
+        `;
+        grid.appendChild(el);
+      });
+    }
+
+    function renderCart(){
+      cartItems.innerHTML = "";
+      if(cart.length === 0){
+        cartItems.innerHTML = `<div class="pill">cart is empty</div>`;
+        return;
+      }
+      cart.forEach(item => {
+        const row = document.createElement("div");
+        row.style.display = "flex";
+        row.style.justifyContent = "space-between";
+        row.style.gap = "10px";
+        row.style.alignItems = "center";
+        row.style.padding = "10px";
+        row.style.border = "1px solid var(--border)";
+        row.style.borderRadius = "14px";
+        row.innerHTML = `
+          <div style="display:grid;gap:2px;">
+            <b style="font-size:13px;">${item.title}</b>
+            <span style="font-size:12px;color:var(--muted);">${item.variant}</span>
+          </div>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <span style="font-weight:900;font-size:13px;">${fmt(item.price)}</span>
+            <button class="btn" data-remove="${item.id}" style="padding:8px 10px;">remove</button>
+          </div>
+        `;
+        cartItems.appendChild(row);
+      });
+    }
+
+    document.addEventListener("click", (e) => {
+      const addId = e.target?.dataset?.add;
+      const removeId = e.target?.dataset?.remove;
+      const viewId = e.target?.dataset?.view;
+
+      if(addId){
+        const p = products.find(x => x.id === Number(addId));
+        cart.push(p);
+        renderCart();
+        cartDialog.showModal();
+      }
+
+      if(removeId){
+        const idx = cart.findIndex(x => x.id === Number(removeId));
+        if(idx >= 0) cart.splice(idx, 1);
+        renderCart();
+      }
+
+      if(viewId){
+        const p = products.find(x => x.id === Number(viewId));
+        alert(`mock view:\n\n${p.title}\n${p.variant}\n${fmt(p.price)}\n\nwire this to /products/... in shopify`);
+      }
+    });
+
+    // header search toggle
+    const toggle = document.getElementById("searchToggle");
+    const bar = document.getElementById("searchbar");
+    toggle.addEventListener("click", () => {
+      const open = bar.classList.toggle("open");
+      toggle.setAttribute("aria-expanded", String(open));
+      if(open) document.getElementById("q").focus();
+    });
+
+    document.getElementById("searchBtn").addEventListener("click", () => {
+      const q = (document.getElementById("q").value || "").toLowerCase().trim();
+      if(!q) return renderProducts(products);
+      renderProducts(products.filter(p => (p.title + " " + p.variant + " " + p.tag).toLowerCase().includes(q)));
+    });
+
+    // cart buttons
+    document.getElementById("cartBtn").addEventListener("click", () => { renderCart(); cartDialog.showModal(); });
+    document.getElementById("closeCart").addEventListener("click", () => cartDialog.close());
+    document.getElementById("clearCart").addEventListener("click", () => { cart = []; renderCart(); });
+
+    // init
+    renderProducts(products);
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
+</body>
+</html>
